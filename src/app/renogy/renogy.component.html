@@ -1,0 +1,4 @@
+<p>renogy works!</p>
+<div>Solar Power: {{ (renogystatus$ | async)?.solarPower }}Wh</div>
+<div>Battery Charge: {{ (renogystatus$ | async)?.batteryCapacity }}%</div>
+<div>Output Power: {{ (renogystatus$ | async)?.outputPower }}Wh</div>
