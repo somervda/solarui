@@ -1,4 +1,21 @@
-<p>renogy works!</p>
-<div>Solar Power: {{ (renogystatus$ | async)?.solarPower }}Wh</div>
-<div>Battery Charge: {{ (renogystatus$ | async)?.batteryCapacity }}%</div>
-<div>Output Power: {{ (renogystatus$ | async)?.outputPower }}Wh</div>
+<mat-card>
+  <mat-card-title>Renogy Status</mat-card-title>
+  <div class="gridwrapper">
+    <div class="prompt">Solar Power</div>
+    <div>{{ (renogystatus$ | async)?.solarPower }}W</div>
+    <div class="prompt">Solar Volts</div>
+    <div>{{ (renogystatus$ | async)?.solarVolts }}V</div>
+    <div class="prompt">Solar Amps</div>
+    <div>{{ (renogystatus$ | async)?.solarAmps }}A</div>
+    <div class="prompt">Battery</div>
+    <div>{{ (renogystatus$ | async)?.batteryCapacity }}%</div>
+    <div class="prompt">Output Power</div>
+    <div>{{ (renogystatus$ | async)?.outputPower }}W</div>
+    <div class="prompt">Output Volts</div>
+    <div>{{ (renogystatus$ | async)?.outputVoltage }}V</div>
+    <div class="prompt">Output Amps</div>
+    <div>{{ (renogystatus$ | async)?.outputCurrent }}A</div>
+    <div class="prompt">Charging Mode</div>
+    <div>{{ (renogystatus$ | async)?.chargingModeDesc }}</div>
+  </div>
+</mat-card>
