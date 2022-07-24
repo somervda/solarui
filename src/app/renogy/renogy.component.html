@@ -1,5 +1,5 @@
 <mat-card style="border: grey; margin: 5px; max-width: 1000px">
-  <mat-card-title>Renogy Status</mat-card-title>
+  <!-- <mat-card-title>Renogy Status</mat-card-title> -->
   <mat-card-content>
     <div class="gridwrapper">
       <div class="prompt">Solar Power</div>
@@ -22,7 +22,7 @@
   </mat-card-content>
 </mat-card>
 <mat-card style="border: grey; margin: 5px; max-width: 1000px">
-  <mat-card-title>Renogy History</mat-card-title>
+  <!-- <mat-card-title>Renogy History</mat-card-title> -->
   <mat-card-content>
     <google-chart
       *ngIf="showChart"
@@ -36,4 +36,10 @@
     >
     </google-chart> </mat-card-content
 ></mat-card>
-<!-- <div *ngFor="let entry of renogyhistory$ | async">{{ entry }}</div> -->
+
+<div
+  *ngIf="(cache$ | async)?.webcamOn == false"
+  style="max-width: 1000px; margin: 3px"
+>
+  <button mat-stroked-button style="float: right">Force Webcam On</button>
+</div>

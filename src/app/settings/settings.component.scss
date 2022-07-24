@@ -1,0 +1,13 @@
+.prompt {
+    font-weight: 500;
+  }
+
+// Create a 4 column layout when screen is more than 400px wide
+@media (min-width: 400px) {
+    .gridwrapper {
+      display: grid;
+      grid-template-columns: 170px 1fr 170px 1fr;
+      grid-gap: 3px;
+
+    }
+  }

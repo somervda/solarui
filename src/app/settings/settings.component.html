@@ -1,0 +1,25 @@
+<mat-card style="border: grey; margin: 5px; max-width: 1000px">
+  <!-- <mat-card-title>Renogy Status</mat-card-title> -->
+  <mat-card-content>
+    <div class="gridwrapper">
+      <div class="prompt">Power Save Level</div>
+      <div>{{ (cache$ | async)?.powerSaveLevel }}%</div>
+      <div class="prompt">Rig Expiry</div>
+      <div>{{ (cache$ | async)?.rigExpiry }}</div>
+      <div class="prompt">Rig Expiry Minutes</div>
+      <div>{{ (cache$ | async)?.rigExpiryMinutes }} Minutes</div>
+      <div class="prompt">Rig Powered On?</div>
+      <div>{{ (cache$ | async)?.rigOn }}</div>
+      <div class="prompt">Webcam Expiry</div>
+      <div>{{ (cache$ | async)?.webcamExpiry }}</div>
+      <div class="prompt">Webcam Expiry Minutes</div>
+      <div>{{ (cache$ | async)?.webcamExpiryMinutes }} Minutes</div>
+      <div class="prompt">Webcam Powered On?</div>
+      <div>{{ (cache$ | async)?.webcamOn }}</div>
+      <div class="prompt">Webcam run at night?</div>
+      <div>{{ (cache$ | async)?.webcamRunAtNight }}</div>
+      <div class="prompt">Webcam power off time?</div>
+      <div>{{ (cache$ | async)?.webcamTurnOffTime }} (Hour 6PM--6AM)</div>
+    </div>
+  </mat-card-content>
+</mat-card>

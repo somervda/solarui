@@ -28,10 +28,14 @@ export class RenogyService {
   constructor(private http: HttpClient) {}
 
   getStatus() {
-    return this.http.get<RenogyStatus>('http://solar/api/renogystatus');
+    // Note: ios was not doing http gets unless the fully qualified URL was used
+    // i.e. http://solar.local/... not http://solar/...
+    return this.http.get<RenogyStatus>('http://solar.local/api/renogystatus');
   }
 
   getHistory24() {
-    return this.http.get<[[RenogyHistory]]>('http://solar/api/renogyhistory');
+    return this.http.get<[[RenogyHistory]]>(
+      'http://solar.local/api/renogyhistory'
+    );
   }
 }
