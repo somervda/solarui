@@ -7,6 +7,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { RenogyComponent } from './renogy/renogy.component';
 import { HttpClientModule } from '@angular/common/http';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [AppComponent, RenogyComponent],
@@ -16,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatTabsModule,
     HttpClientModule,
     MatCardModule,
+    GoogleChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

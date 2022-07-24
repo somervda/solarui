@@ -14,6 +14,13 @@ export interface RenogyStatus {
   solarVolts: number;
 }
 
+export interface RenogyHistory {
+  epochTime: number;
+  batteryCapacity: number;
+  solarPower: number;
+  outputPower: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -22,5 +29,9 @@ export class RenogyService {
 
   getStatus() {
     return this.http.get<RenogyStatus>('http://solar/api/renogystatus');
+  }
+
+  getHistory24() {
+    return this.http.get<[[RenogyHistory]]>('http://solar/api/renogyhistory');
   }
 }

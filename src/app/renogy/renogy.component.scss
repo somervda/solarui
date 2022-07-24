@@ -6,8 +6,13 @@
 @media (min-width: 400px) {
     .gridwrapper {
       display: grid;
-      grid-template-columns: 150px 1fr 150px 1fr;
+      grid-template-columns: 120px 1fr 120px 1fr;
       grid-gap: 3px;
-      max-width: 1000px;
+
     }
+  }
+
+  .googleChart {
+    width: 100%;
+    min-height: 400px;
   }
