@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // Hard coded the solar RPI address - my vpn was not forwarding my dns info
+  solarURL: 'http://solar.home',
 };
 
 /*

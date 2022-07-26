@@ -34,12 +34,31 @@
       [dynamicResize]="chartResize"
       class="googleChart"
     >
-    </google-chart> </mat-card-content
-></mat-card>
+    </google-chart>
+    <div style="text-align: center; margin-top: 10px">
+      <mat-radio-group (change)="historyChange($event)">
+        <mat-radio-button value="1" checked
+          >24 Hours&nbsp;&nbsp;</mat-radio-button
+        >
+        <mat-radio-button value="7">7 Days&nbsp;&nbsp;</mat-radio-button>
+        <mat-radio-button value="30">30 Days&nbsp;&nbsp;</mat-radio-button>
+        <mat-radio-button value="365">1 year&nbsp;&nbsp;</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </mat-card-content></mat-card
+>
 
 <div
-  *ngIf="(cache$ | async)?.webcamOn == false"
+  *ngIf="(cache$ | async)?.webcamOn == true"
   style="max-width: 1000px; margin: 3px"
 >
-  <button mat-stroked-button style="float: right">Force Webcam On</button>
+  <button
+    mat-stroked-button
+    matTooltip="Press to turn the webcam on"
+    style="float: right"
+    (click)="onWebcam()"
+    id="btnWebcam"
+  >
+    Webcam On
+  </button>
 </div>

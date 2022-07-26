@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 export interface RenogyStatus {
   batteryCapacity: number;
@@ -29,13 +30,18 @@ export class RenogyService {
 
   getStatus() {
     // Note: ios was not doing http gets unless the fully qualified URL was used
-    // i.e. http://solar.local/... not http://solar/...
-    return this.http.get<RenogyStatus>('http://solar.local/api/renogystatus');
+    return this.http.get<RenogyStatus>(
+      environment.solarURL + '/api/renogystatus'
+    );
   }
 
-  getHistory24() {
+  getHistory(days: number) {
+    console.log('getHistory ', days);
+    let start = new Date().getTime() / 1000;
+    start -= 60 * 60 * 24 * days;
+    start = Math.round(start);
     return this.http.get<[[RenogyHistory]]>(
-      'http://solar.local/api/renogyhistory'
+      environment.solarURL + '/api/renogyhistory/' + start
     );
   }
 }

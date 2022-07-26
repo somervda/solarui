@@ -7,6 +7,7 @@ import {
 } from '../services/renogy.service';
 import { ChartType } from 'angular-google-charts';
 import { Cache, CacheService } from '../services/cache.service';
+import { MatRadioChange } from '@angular/material/radio';
 
 @Component({
   selector: 'app-renogy',
@@ -61,10 +62,27 @@ export class RenogyComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.renogystatus$ = this.renogyService.getStatus();
     this.cache$ = this.cacheService.getCache();
-    this.renogyhistory$ = this.renogyService.getHistory24();
+    this.renogyhistory$ = this.renogyService.getHistory(1);
     this.renogyhistory$$ = this.renogyhistory$.subscribe((historyData) => {
       // console.log(historyData);
       // console.log(this.chartData);
+      this.chartData = JSON.parse(JSON.stringify(historyData));
+      // Convert epoch date to a javascript date
+      this.chartData.forEach((chartItem) => {
+        chartItem[0] = new Date(chartItem[0] * 1000);
+      });
+    });
+  }
+
+  onWebcam() {
+    console.log('webcam pressed');
+  }
+
+  historyChange($event: MatRadioChange) {
+    console.log($event.value);
+
+    this.renogyhistory$ = this.renogyService.getHistory($event.value);
+    this.renogyhistory$$ = this.renogyhistory$.subscribe((historyData) => {
       this.chartData = JSON.parse(JSON.stringify(historyData));
       // Convert epoch date to a javascript date
       this.chartData.forEach((chartItem) => {

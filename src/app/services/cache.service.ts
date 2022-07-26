@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 export interface Cache {
   powerSaveLevel: number;
@@ -21,7 +22,6 @@ export class CacheService {
 
   getCache() {
     // Note: ios was not doing http gets unless the fully qualified URL was used
-    // i.e. http://solar.local/... not http://solar/...
-    return this.http.get<Cache>('http://solar.local/api/cache');
+    return this.http.get<Cache>(environment.solarURL + '/api/cache');
   }
 }
