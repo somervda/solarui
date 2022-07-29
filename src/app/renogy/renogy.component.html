@@ -41,15 +41,17 @@
           >24 Hours&nbsp;&nbsp;</mat-radio-button
         >
         <mat-radio-button value="7">7 Days&nbsp;&nbsp;</mat-radio-button>
+        <mat-radio-button value="14">14 Days&nbsp;&nbsp;</mat-radio-button>
         <mat-radio-button value="30">30 Days&nbsp;&nbsp;</mat-radio-button>
-        <mat-radio-button value="365">1 year&nbsp;&nbsp;</mat-radio-button>
+        <mat-radio-button value="90">90 Days&nbsp;&nbsp;</mat-radio-button>
+        <mat-radio-button value="365">1 Year&nbsp;&nbsp;</mat-radio-button>
       </mat-radio-group>
     </div>
   </mat-card-content></mat-card
 >
 
 <div
-  *ngIf="(cache$ | async)?.webcamOn == true"
+  *ngIf="(cache$ | async)?.webcamOn == false"
   style="max-width: 1000px; margin: 3px"
 >
   <button

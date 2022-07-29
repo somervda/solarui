@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,15 +10,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { RenogyComponent } from './renogy/renogy.component';
 import { HttpClientModule } from '@angular/common/http';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { SettingsComponent } from './settings/settings.component';
-import { MatRadioModule } from '@angular/material/radio';
-import { environment } from '../environments/environment';
+import { RigComponent } from './rig/rig.component';
 
 @NgModule({
-  declarations: [AppComponent, RenogyComponent, SettingsComponent],
+  declarations: [
+    AppComponent,
+    RenogyComponent,
+    SettingsComponent,
+    RigComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -30,6 +37,9 @@ import { environment } from '../environments/environment';
     MatInputModule,
     MatTooltipModule,
     MatRadioModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

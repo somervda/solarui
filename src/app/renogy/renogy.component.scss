@@ -16,3 +16,7 @@
     width: 100%;
     min-height: 400px;
   }
+
+  :host ::ng-deep .mat-radio-container{
+    margin-top: 5px;
+  }

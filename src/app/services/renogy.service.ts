@@ -30,13 +30,13 @@ export class RenogyService {
 
   getStatus() {
     // Note: ios was not doing http gets unless the fully qualified URL was used
+    console.log('getStatus');
     return this.http.get<RenogyStatus>(
       environment.solarURL + '/api/renogystatus'
     );
   }
 
   getHistory(days: number) {
-    console.log('getHistory ', days);
     let start = new Date().getTime() / 1000;
     start -= 60 * 60 * 24 * days;
     start = Math.round(start);

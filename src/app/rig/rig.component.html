@@ -1,0 +1,28 @@
+<div
+  *ngIf="(cache$ | async)?.rigOn == false"
+  style="max-width: 1000px; margin: 3px"
+>
+  <button
+    mat-stroked-button
+    matTooltip="Turn the rig on"
+    style="float: right"
+    (click)="onRig()"
+    id="btnRigOn"
+  >
+    Rig On
+  </button>
+</div>
+<div
+  *ngIf="(cache$ | async)?.rigOn == true"
+  style="max-width: 1000px; margin: 3px"
+>
+  <button
+    mat-stroked-button
+    matTooltip="Turn the rig off"
+    style="float: right"
+    (click)="offRig()"
+    id="btnRigOff"
+  >
+    Rig Off
+  </button>
+</div>

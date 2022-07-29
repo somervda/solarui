@@ -24,4 +24,45 @@ export class CacheService {
     // Note: ios was not doing http gets unless the fully qualified URL was used
     return this.http.get<Cache>(environment.solarURL + '/api/cache');
   }
+
+  // Settings update routines
+
+  powerSaveLevel(value: number) {
+    // console.log('cacheService:powerSaveLevel', value);
+    return this.http.get<Cache>(
+      environment.solarURL + '/api/cache/powerSaveLevel/' + value.toString()
+    );
+  }
+
+  webcamExpiryMinutes(value: number) {
+    // console.log('cacheService:webcamExpiryMinutes', value);
+    return this.http.get<Cache>(
+      environment.solarURL +
+        '/api/cache/webcamExpiryMinutes/' +
+        value.toString()
+    );
+  }
+
+  rigExpiryMinutes(value: number) {
+    // console.log('cacheService:rigExpiryMinutes', value);
+    return this.http.get<Cache>(
+      environment.solarURL + '/api/cache/rigExpiryMinutes/' + value.toString()
+    );
+  }
+
+  webcamRunAtNight(value: boolean) {
+    // console.log('cacheService:webcamRunAtNight', value);
+    return this.http.get<Cache>(
+      environment.solarURL +
+        '/api/cache/webcamRunAtNight/' +
+        (value == false ? 'False' : 'True')
+    );
+  }
+
+  webcamTurnOffTime(value: string) {
+    // console.log('cacheService:webcamTurnOffTime', value);
+    return this.http.get<Cache>(
+      environment.solarURL + '/api/cache/webcamTurnOffTime/' + value
+    );
+  }
 }

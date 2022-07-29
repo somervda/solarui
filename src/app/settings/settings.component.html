@@ -1,25 +1,170 @@
 <mat-card style="border: grey; margin: 5px; max-width: 1000px">
-  <!-- <mat-card-title>Renogy Status</mat-card-title> -->
   <mat-card-content>
-    <div class="gridwrapper">
-      <div class="prompt">Power Save Level</div>
-      <div>{{ (cache$ | async)?.powerSaveLevel }}%</div>
-      <div class="prompt">Rig Expiry</div>
-      <div>{{ (cache$ | async)?.rigExpiry }}</div>
-      <div class="prompt">Rig Expiry Minutes</div>
-      <div>{{ (cache$ | async)?.rigExpiryMinutes }} Minutes</div>
-      <div class="prompt">Rig Powered On?</div>
-      <div>{{ (cache$ | async)?.rigOn }}</div>
-      <div class="prompt">Webcam Expiry</div>
-      <div>{{ (cache$ | async)?.webcamExpiry }}</div>
-      <div class="prompt">Webcam Expiry Minutes</div>
-      <div>{{ (cache$ | async)?.webcamExpiryMinutes }} Minutes</div>
-      <div class="prompt">Webcam Powered On?</div>
-      <div>{{ (cache$ | async)?.webcamOn }}</div>
-      <div class="prompt">Webcam run at night?</div>
-      <div>{{ (cache$ | async)?.webcamRunAtNight }}</div>
-      <div class="prompt">Webcam power off time?</div>
-      <div>{{ (cache$ | async)?.webcamTurnOffTime }} (Hour 6PM--6AM)</div>
+    <div [formGroup]="cacheForm">
+      <div class="gridwrapper2">
+        <!-- Power Save Level -->
+        <div>
+          <mat-form-field>
+            <input
+              matInput
+              formControlName="powerSaveLevel"
+              placeholder="Power Save Level"
+            />
+            <mat-error
+              *ngIf="cacheForm.controls['powerSaveLevel'].hasError('required')"
+            >
+              Is required.
+            </mat-error>
+            <mat-error
+              *ngIf="cacheForm.controls['powerSaveLevel'].hasError('min')"
+            >
+              Must be more than or equal to 0
+            </mat-error>
+            <mat-error
+              *ngIf="cacheForm.controls['powerSaveLevel'].hasError('max')"
+            >
+              Must be less or equal to 100
+            </mat-error>
+            <mat-error
+              *ngIf="cacheForm.controls['powerSaveLevel'].hasError('pattern')"
+            >
+              Must be numeric.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- webcam expiry minutes  -->
+        <div>
+          <mat-form-field>
+            <input
+              matInput
+              formControlName="webcamExpiryMinutes"
+              placeholder="Webcam Expiry Minutes"
+            />
+            <mat-error
+              *ngIf="
+                cacheForm.controls['webcamExpiryMinutes'].hasError('required')
+              "
+            >
+              Is required.
+            </mat-error>
+            <mat-error
+              *ngIf="cacheForm.controls['webcamExpiryMinutes'].hasError('max')"
+            >
+              Must be less than or equal to 180
+            </mat-error>
+            <mat-error
+              *ngIf="cacheForm.controls['webcamExpiryMinutes'].hasError('min')"
+            >
+              Must be greater than 0
+            </mat-error>
+            <mat-error
+              *ngIf="
+                cacheForm.controls['webcamExpiryMinutes'].hasError('pattern')
+              "
+            >
+              Must be numeric.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- Rig Expiry Minutes -->
+        <div>
+          <mat-form-field>
+            <input
+              matInput
+              formControlName="rigExpiryMinutes"
+              placeholder="Rig Expiry Minutes"
+            />
+            <mat-error
+              *ngIf="
+                cacheForm.controls['rigExpiryMinutes'].hasError('required')
+              "
+            >
+              Is required.
+            </mat-error>
+            <mat-error
+              *ngIf="cacheForm.controls['rigExpiryMinutes'].hasError('max')"
+            >
+              Must be less than or equal to 180
+            </mat-error>
+            <mat-error
+              *ngIf="cacheForm.controls['rigExpiryMinutes'].hasError('min')"
+            >
+              Must be greater than 0
+            </mat-error>
+            <mat-error
+              *ngIf="cacheForm.controls['rigExpiryMinutes'].hasError('pattern')"
+            >
+              Must be numeric.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- Webcam Run at night -->
+        <div>
+          <mat-form-field>
+            <mat-label>Webcam Run at Night?</mat-label>
+            <mat-select
+              formControlName="webcamRunAtNight"
+              [compareWith]="wranComparisonFunction"
+            >
+              <!-- Note: Option values must be strings, so I use "0" and "1" strings to reduce confusion -->
+              <mat-option value="0">No</mat-option>
+              <mat-option value="1">Yes</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error
+            *ngIf="cacheForm.controls['webcamRunAtNight'].hasError('required')"
+          >
+            Is required.
+          </mat-error>
+        </div>
+
+        <!--webcamTurnOffTime -->
+        <div>
+          <mat-form-field>
+            <mat-label>Webcam Turn Off Time</mat-label>
+            <mat-select
+              formControlName="webcamTurnOffTime"
+              [compareWith]="wtotComparisonFunction"
+            >
+              <mat-option value="None">Not Set</mat-option>
+              <mat-option value="18">18:00 (6PM)</mat-option>
+              <mat-option value="19">19:00 (7PM)</mat-option>
+              <mat-option value="20">20:00 (8PM)</mat-option>
+              <mat-option value="21">21:00 (9PM)</mat-option>
+              <mat-option value="22">22:00 (10PM)</mat-option>
+              <mat-option value="23">23:00 (11PM)</mat-option>
+              <mat-option value="0">00:00 (12AM)</mat-option>
+              <mat-option value="1">01:00 (1AM)</mat-option>
+              <mat-option value="2">02:00 (2AM)</mat-option>
+              <mat-option value="3">03:00 (3AM)</mat-option>
+              <mat-option value="4">04:00 (4AM)</mat-option>
+              <mat-option value="5">05:00 (5AM)</mat-option>
+              <mat-option value="6">06:00 (6AM)</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <button mat-stroked-button (click)="update()">Update</button>
+    </div>
+  </mat-card-content></mat-card
+>
+
+<mat-card style="border: grey; margin: 5px; max-width: 1000px">
+  <mat-card-content>
+    <div class="gridwrapper2">
+      <div *ngIf="(cache$ | async)?.rigOn == true">
+        <span style="color: green">Rig is Powered On</span>
+      </div>
+      <div *ngIf="(cache$ | async)?.rigOn == false">
+        <span style="color: red">Rig is Powered Off</span>
+      </div>
+      <div *ngIf="(cache$ | async)?.webcamOn == true">
+        <p style="color: green">Webcam is Powered On</p>
+      </div>
+      <div *ngIf="(cache$ | async)?.webcamOn == false">
+        <p style="color: red">Webcam is Powered Off</p>
+      </div>
     </div>
   </mat-card-content>
 </mat-card>

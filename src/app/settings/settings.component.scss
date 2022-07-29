@@ -2,12 +2,13 @@
     font-weight: 500;
   }
 
-// Create a 4 column layout when screen is more than 400px wide
-@media (min-width: 400px) {
-    .gridwrapper {
+
+  @media (min-width: 400px) {
+    .gridwrapper2 {
       display: grid;
-      grid-template-columns: 170px 1fr 170px 1fr;
-      grid-gap: 3px;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 10px;
 
     }
   }
+
