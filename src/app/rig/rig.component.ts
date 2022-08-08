@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Cache, CacheService } from '../services/cache.service';
 import { RigService } from '../services/rig.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-rig',
@@ -10,12 +11,13 @@ import { RigService } from '../services/rig.service';
 })
 export class RigComponent implements OnInit, OnDestroy {
   cache$: Observable<Cache> | undefined;
-  rig$: Observable<string> | undefined;
+  rig$: Observable<string | never[]> | undefined;
   rig$$: Subscription | undefined;
 
   constructor(
     private cacheService: CacheService,
-    private rigService: RigService
+    private rigService: RigService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -25,9 +27,17 @@ export class RigComponent implements OnInit, OnDestroy {
   onRig() {
     // console.log('rig on');
     this.rig$ = this.rigService.rigOn();
-    this.rig$$ = this.rig$.subscribe((response) => {
-      this.cache$ = this.cacheService.getCache();
-    });
+    this.rig$$ = this.rig$.subscribe(
+      (response) => {
+        console.log(response);
+        this.cache$ = this.cacheService.getCache();
+      },
+      (error) => {
+        this.snackBar.open(error.error, 'Close', {
+          duration: 5000,
+        });
+      }
+    );
   }
   offRig() {
     // console.log('rig off');

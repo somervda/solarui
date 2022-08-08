@@ -11,6 +11,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { RenogyComponent } from './renogy/renogy.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,6 +41,7 @@ import { RigComponent } from './rig/rig.component';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

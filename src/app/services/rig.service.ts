@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,6 +12,7 @@ export class RigService {
     // console.log('Rig service on', environment.solarURL + '/api/rig/on');
     return this.http.get<string>(environment.solarURL + '/api/rig/on');
   }
+
   rigOff() {
     // console.log('Rig service off', environment.solarURL + '/api/rig/off');
     return this.http.get<string>(environment.solarURL + '/api/rig/off');
