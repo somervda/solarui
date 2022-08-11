@@ -53,7 +53,7 @@ export class RenogyComponent implements OnInit, OnDestroy {
       1: { targetAxisIndex: 1 },
       2: { targetAxisIndex: 1 },
     },
-    curveType: 'function',
+    // curveType: 'function',
     formatters: {},
   };
   chartData: any[] = [];

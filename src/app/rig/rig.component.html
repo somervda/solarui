@@ -1,28 +1,40 @@
-<div
-  *ngIf="(cache$ | async)?.rigOn == false"
-  style="max-width: 1000px; margin: 3px"
->
-  <button
-    mat-stroked-button
-    matTooltip="Turn the rig on"
-    style="float: right"
-    (click)="onRig()"
-    id="btnRigOn"
-  >
-    Rig On
-  </button>
-</div>
-<div
-  *ngIf="(cache$ | async)?.rigOn == true"
-  style="max-width: 1000px; margin: 3px"
->
-  <button
-    mat-stroked-button
-    matTooltip="Turn the rig off"
-    style="float: right"
-    (click)="offRig()"
-    id="btnRigOff"
-  >
-    Rig Off
-  </button>
-</div>
+<mat-card style="border: grey; margin: 5px; max-width: 900px">
+  <mat-card-content>
+    <div *ngIf="(cache$ | async)?.rigOn == false" style="margin: 3px">
+      <button
+        mat-stroked-button
+        matTooltip="Turn the rig on"
+        style="float: right"
+        (click)="onRig()"
+        id="btnRigOn"
+      >
+        Rig On
+      </button>
+    </div>
+    <div
+      *ngIf="(cache$ | async)?.rigOn == true"
+      style="max-width: 1000px; margin: 3px"
+    >
+      <button
+        mat-stroked-button
+        matTooltip="Turn the rig off"
+        style="float: right"
+        (click)="offRig()"
+        id="btnRigOff"
+      >
+        Rig Off
+      </button>
+    </div>
+
+    <div class="gridwrapper">
+      <div class="prompt">Frequency</div>
+      <div>{{ rigFrequency }}</div>
+      <div class="prompt">Mode</div>
+      <div>{{ rigMode }}</div>
+      <div class="prompt">Band</div>
+      <div>{{ rigBand }}</div>
+      <div class="prompt">Power</div>
+      <div></div>
+    </div>
+  </mat-card-content>
+</mat-card>

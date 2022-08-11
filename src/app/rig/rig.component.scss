@@ -1,0 +1,13 @@
+.prompt {
+    font-weight: 500;
+  }
+
+// Create a 2 column layout when screen is more than 400px wide
+@media (min-width: 400px) {
+    .gridwrapper {
+      display: grid;
+      grid-template-columns: 120px 1fr 120px 1fr;
+      grid-gap: 3px;
+
+    }
+  }
