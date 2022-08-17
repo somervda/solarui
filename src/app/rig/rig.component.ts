@@ -2,7 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Cache, CacheService } from '../services/cache.service';
 import { RigService } from '../services/rig.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { RigctlService } from '../services/rigctl.service';
 
 @Component({
@@ -20,6 +24,9 @@ export class RigComponent implements OnInit, OnDestroy {
   rigMode: string = '';
   rigBand: string = '';
 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   constructor(
     private cacheService: CacheService,
     private rigService: RigService,
@@ -29,7 +36,6 @@ export class RigComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cache$ = this.cacheService.getCache();
-    this.updateStatus();
   }
 
   onRig() {
@@ -38,10 +44,13 @@ export class RigComponent implements OnInit, OnDestroy {
     this.rig$$ = this.rig$.subscribe(
       (response) => {
         this.cache$ = this.cacheService.getCache();
+        this.updateStatus();
       },
       (error) => {
         this.snackBar.open(error.error, 'Close', {
           duration: 5000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
         });
       }
     );

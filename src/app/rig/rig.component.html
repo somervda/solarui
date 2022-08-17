@@ -1,4 +1,6 @@
-<mat-card style="border: grey; margin: 5px; max-width: 900px">
+<mat-card
+  style="border: grey; margin: 5px; max-width: 900px; min-height: 200px"
+>
   <mat-card-content>
     <div *ngIf="(cache$ | async)?.rigOn == false" style="margin: 3px">
       <button
@@ -26,7 +28,7 @@
       </button>
     </div>
 
-    <div class="gridwrapper">
+    <div class="gridwrapper" *ngIf="(cache$ | async)?.rigOn == true">
       <div class="prompt">Frequency</div>
       <div>{{ rigFrequency }}</div>
       <div class="prompt">Mode</div>
