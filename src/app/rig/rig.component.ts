@@ -24,6 +24,7 @@ export class RigComponent implements OnInit, OnDestroy {
   rigMode: string = '';
   rigBand: string = '';
   showSpinner=false;
+  spinnerMsg = ""
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -42,10 +43,12 @@ export class RigComponent implements OnInit, OnDestroy {
   onRig() {
     // console.log('rig on');
     this.showSpinner=true;
+    this.spinnerMsg="Turning on rig..."
     this.rig$ = this.rigService.rigOn();
     this.rig$$ = this.rig$.subscribe(
       (response) => {
         this.showSpinner=false;
+        this.spinnerMsg=""
         this.cache$ = this.cacheService.getCache();
         this.updateStatus();
       },
@@ -63,9 +66,11 @@ export class RigComponent implements OnInit, OnDestroy {
   offRig() {
     // console.log('rig off');
     this.showSpinner=true;
+    this.spinnerMsg="Turning off rig..."
     this.rig$ = this.rigService.rigOff();
     this.rig$$ = this.rig$.subscribe((response) => {
       this.showSpinner=false;
+      this.spinnerMsg=""
       this.cache$ = this.cacheService.getCache();
     });
   }
