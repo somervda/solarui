@@ -38,9 +38,10 @@
       <div class="prompt">Power</div>
       <div></div>
     </div>
-    <div class="center" *ngIf="showSpinner" >
-    <!-- needed to fudge the left alighnment of the spinner to center over text -->
-    <mat-spinner  diameter="40" style="margin-left: 30px;" ></mat-spinner><p>{{[spinnerMsg]}}</p></div>
-
+    <div class="center" *ngIf="showSpinner">
+      <!-- needed to fudge the left alignment of the spinner to center over text -->
+      <mat-spinner diameter="40" style="margin-left: 30px"></mat-spinner>
+      <p>{{ [spinnerMsg] }}</p>
+    </div>
   </mat-card-content>
 </mat-card>
