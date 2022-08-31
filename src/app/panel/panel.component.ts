@@ -24,7 +24,7 @@ export class PanelComponent implements OnInit, OnDestroy {
   panelhistory$$: Subscription | undefined;
 
   // Google Charts
-  showChart = true;
+  showChart = false;
   chartResize = true;
   chartType = ChartType.ComboChart;
   chartColumns: string[] = ['Hour', 'Panel Volts', 'Boost %', 'Float %'];
@@ -84,17 +84,17 @@ export class PanelComponent implements OnInit, OnDestroy {
   processHourlyHistory(historyDays: number, hourlyHistory: any[]) {
     // Copy the hourlyHistory array to history using JSON/JSON trick
     let historyData: any[] = JSON.parse(JSON.stringify(hourlyHistory));
-    // console.log(historyData);
+    console.log(historyData);
     if (historyDays > 20) {
       // Summarize the data into daily buckets if we are looking at many days of data
       // Create a new array of daily totals
       let day1 = true;
       let lastDay = new Date(historyData[0][0] * 1000).getDate();
       let lastEpochDate = historyData[0][0];
-      // console.log('lastDate:', lastDay, lastEpochDate);
-      let batteryLevel = 0;
-      let solarPower = 0;
-      let outputPower = 0;
+      console.log('lastDate:', lastDay, lastEpochDate);
+      let solarVolts = 0;
+      let boostPct = 0;
+      let floatPct = 0;
       let hourCounter = 0;
       let dayHistory: any[] = [];
       historyData.forEach((historyItem) => {
@@ -109,24 +109,25 @@ export class PanelComponent implements OnInit, OnDestroy {
             let dayItem = [];
             dayItem.push(
               lastEpochDate,
-              batteryLevel / hourCounter,
-              solarPower,
-              outputPower
+              solarVolts / hourCounter,
+              boostPct / hourCounter,
+              floatPct / hourCounter
             );
+            console.log(dayHistory);
             dayHistory.push(JSON.parse(JSON.stringify(dayItem)));
           } else {
             day1 = false;
           }
-          batteryLevel = 0;
-          solarPower = 0;
-          outputPower = 0;
+          solarVolts = 0;
+          boostPct = 0;
+          floatPct = 0;
           hourCounter = 0;
           lastDay = new Date(historyItem[0] * 1000).getDate();
           lastEpochDate = historyItem[0];
         }
-        batteryLevel += historyItem[1];
-        solarPower += historyItem[2];
-        outputPower += historyItem[3];
+        solarVolts += historyItem[1];
+        boostPct += historyItem[2];
+        floatPct += historyItem[3];
         hourCounter += 1;
       });
       // if (hourCounter > 0) {
@@ -135,12 +136,13 @@ export class PanelComponent implements OnInit, OnDestroy {
       //     lastEpochDate,
       //     batteryLevel / hourCounter,
       //     solarPower / hourCounter,
-      //     outputPower / hourCounter
+      //     floatPct / hourCounter
       //   );
       //   dayHistory.push(JSON.parse(JSON.stringify(dayItem)));
       // }
       // console.log('dayHistory:', dayHistory);
       this.chartData = JSON.parse(JSON.stringify(dayHistory));
+      // console.log(this.chartData);
     } else {
       this.chartData = JSON.parse(JSON.stringify(historyData));
     }
@@ -149,6 +151,11 @@ export class PanelComponent implements OnInit, OnDestroy {
     this.chartData.forEach((chartItem) => {
       chartItem[0] = new Date(chartItem[0] * 1000);
     });
+    if (this.chartData.length == 0) {
+      this.showChart = false;
+    } else {
+      this.showChart = true;
+    }
   }
 
   ngOnDestroy() {

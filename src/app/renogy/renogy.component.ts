@@ -24,7 +24,7 @@ export class RenogyComponent implements OnInit, OnDestroy {
   renogyhistory$$: Subscription | undefined;
 
   // Google Charts
-  showChart = true;
+  showChart = false;
   chartResize = true;
   chartType = ChartType.ComboChart;
   chartColumns: string[] = ['Hour', 'Battery %', 'Solar Watts', 'Output Watts'];
@@ -155,6 +155,11 @@ export class RenogyComponent implements OnInit, OnDestroy {
     this.chartData.forEach((chartItem) => {
       chartItem[0] = new Date(chartItem[0] * 1000);
     });
+    if (this.chartData.length == 0) {
+      this.showChart = false;
+    } else {
+      this.showChart = true;
+    }
   }
 
   ngOnDestroy() {

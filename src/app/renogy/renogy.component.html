@@ -1,5 +1,5 @@
 <mat-card style="border: grey; margin: 5px; max-width: 1000px">
-  <!-- <mat-card-title>Renogy Status</mat-card-title> -->
+  <mat-card-title>Current Status</mat-card-title>
   <mat-card-content>
     <div class="gridwrapper">
       <div class="prompt">Solar Power</div>
@@ -22,7 +22,7 @@
   </mat-card-content>
 </mat-card>
 <mat-card style="border: grey; margin: 5px; max-width: 1000px">
-  <!-- <mat-card-title>Renogy History</mat-card-title> -->
+  <mat-card-title>History</mat-card-title>
   <mat-card-content>
     <google-chart
       *ngIf="showChart"
@@ -35,6 +35,9 @@
       class="googleChart"
     >
     </google-chart>
+    <div *ngIf="showChart == false" style="text-align: center; margin: 50px">
+      No Chart Data
+    </div>
     <div style="text-align: center; margin-top: 10px">
       <mat-radio-group (change)="historyChange($event)">
         <mat-radio-button value="1" checked
