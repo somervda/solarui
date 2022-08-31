@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { SettingsComponent } from './settings/settings.component';
 import { RigComponent } from './rig/rig.component';
+import { PanelComponent } from './panel/panel.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { RigComponent } from './rig/rig.component';
     RenogyComponent,
     SettingsComponent,
     RigComponent,
+    PanelComponent,
   ],
   imports: [
     BrowserModule,

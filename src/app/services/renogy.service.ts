@@ -21,6 +21,12 @@ export interface RenogyHistory {
   solarPower: number;
   outputPower: number;
 }
+export interface PanelHistory {
+  epochTime: number;
+  solarVolts: number;
+  boostPct: number;
+  floatPct: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -36,12 +42,25 @@ export class RenogyService {
     );
   }
 
-  getHistory(days: number) {
+  getRenogyHistory(days: number) {
     let start = new Date().getTime() / 1000;
     start -= 60 * 60 * 24 * days;
     start = Math.round(start);
     return this.http.get<[[RenogyHistory]]>(
       environment.solarURL + '/api/renogyhistory/' + start
+    );
+  }
+
+  getPanelHistory(days: number) {
+    let start = new Date().getTime() / 1000;
+    start -= 60 * 60 * 24 * days;
+    start = Math.round(start);
+    // Only started collecting panel data on 30Aug2022
+    if (start < 1661882422) {
+      start = 1661882422;
+    }
+    return this.http.get<[[PanelHistory]]>(
+      environment.solarURL + '/api/panelhistory/' + start
     );
   }
 }

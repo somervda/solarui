@@ -3,7 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 import {
   RenogyService,
   RenogyStatus,
-  RenogyHistory,
+  PanelHistory,
 } from '../services/renogy.service';
 import { ChartType } from 'angular-google-charts';
 import { Cache, CacheService } from '../services/cache.service';
@@ -11,23 +11,23 @@ import { MatRadioChange } from '@angular/material/radio';
 import { WebcamService } from '../services/webcam.service';
 
 @Component({
-  selector: 'app-renogy',
-  templateUrl: './renogy.component.html',
-  styleUrls: ['./renogy.component.scss'],
+  selector: 'app-panel',
+  templateUrl: './panel.component.html',
+  styleUrls: ['./panel.component.scss'],
 })
-export class RenogyComponent implements OnInit, OnDestroy {
+export class PanelComponent implements OnInit, OnDestroy {
   renogystatus$: Observable<RenogyStatus> | undefined;
   cache$: Observable<Cache> | undefined;
   webcam$: Observable<string> | undefined;
   webcam$$: Subscription | undefined;
-  renogyhistory$: Observable<[[RenogyHistory]]> | undefined;
-  renogyhistory$$: Subscription | undefined;
+  panelhistory$: Observable<[[PanelHistory]]> | undefined;
+  panelhistory$$: Subscription | undefined;
 
   // Google Charts
   showChart = true;
   chartResize = true;
   chartType = ChartType.ComboChart;
-  chartColumns: string[] = ['Hour', 'Battery %', 'Solar Watts', 'Output Watts'];
+  chartColumns: string[] = ['Hour', 'Panel Volts', 'Boost %', 'Float %'];
   // See https://developers.google.com/chart/interactive/docs/gallery/combochart
   chartOptions = {
     legend: { position: 'bottom' },
@@ -37,21 +37,22 @@ export class RenogyComponent implements OnInit, OnDestroy {
     vAxis: { viewWindow: { min: 0 } },
     vAxes: {
       0: {
-        title: 'Battery %',
+        title: 'Mode %',
         minValue: 0,
         maxValue: 100,
         gridlines: { count: 0 },
       },
       1: {
-        title: 'Watts',
+        title: 'Volts',
         minValue: 0,
         gridlines: { count: 0 },
       },
     },
+    isStacked: true,
     series: {
-      0: { targetAxisIndex: 0 },
-      1: { targetAxisIndex: 1 },
-      2: { targetAxisIndex: 1 },
+      0: { targetAxisIndex: 1 },
+      1: { targetAxisIndex: 0, type: 'area' },
+      2: { targetAxisIndex: 0, type: 'area' },
     },
     // curveType: 'function',
     formatters: {},
@@ -70,20 +71,13 @@ export class RenogyComponent implements OnInit, OnDestroy {
     this.getHistory(1);
   }
 
-  onWebcam() {
-    this.webcam$ = this.webcamService.webcamOn();
-    this.webcam$$ = this.webcam$.subscribe((response) => {
-      this.cache$ = this.cacheService.getCache();
-    });
-  }
-
   historyChange($event: MatRadioChange) {
     this.getHistory($event.value);
   }
 
   getHistory(historyDays: number) {
-    this.renogyhistory$ = this.renogyService.getRenogyHistory(historyDays);
-    this.renogyhistory$$ = this.renogyhistory$.subscribe((hourlyHistory) => {
+    this.panelhistory$ = this.renogyService.getPanelHistory(historyDays);
+    this.panelhistory$$ = this.panelhistory$.subscribe((hourlyHistory) => {
       this.processHourlyHistory(historyDays, hourlyHistory);
     });
   }
@@ -159,8 +153,8 @@ export class RenogyComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // Clean up hanging subscriptions to observables
-    if (this.renogyhistory$$) {
-      this.renogyhistory$$.unsubscribe();
+    if (this.panelhistory$$) {
+      this.panelhistory$$.unsubscribe();
     }
   }
 }

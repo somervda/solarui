@@ -1,0 +1,43 @@
+<mat-card style="border: grey; margin: 5px; max-width: 1000px">
+  <!-- <mat-card-title>Renogy Status</mat-card-title> -->
+  <mat-card-content>
+    <div class="gridwrapper">
+      <div class="prompt">Solar Power</div>
+      <div>{{ (renogystatus$ | async)?.solarPower }}W</div>
+      <div class="prompt">Solar Volts</div>
+      <div>{{ (renogystatus$ | async)?.solarVolts }}V</div>
+      <div class="prompt">Solar Amps</div>
+      <div>{{ (renogystatus$ | async)?.solarAmps }}A</div>
+      <div class="prompt">Charging Mode</div>
+      <div>{{ (renogystatus$ | async)?.chargingModeDesc }}</div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<mat-card style="border: grey; margin: 5px; max-width: 1000px">
+  <!-- <mat-card-title>Renogy History</mat-card-title> -->
+  <mat-card-content>
+    <google-chart
+      *ngIf="showChart"
+      #chart
+      [type]="chartType"
+      [data]="chartData"
+      [columns]="chartColumns"
+      [options]="chartOptions"
+      [dynamicResize]="chartResize"
+      class="googleChart"
+    >
+    </google-chart>
+    <div style="text-align: center; margin-top: 10px">
+      <mat-radio-group (change)="historyChange($event)">
+        <mat-radio-button value="1" checked
+          >24 Hours&nbsp;&nbsp;</mat-radio-button
+        >
+        <mat-radio-button value="7">7 Days&nbsp;&nbsp;</mat-radio-button>
+        <mat-radio-button value="14">14 Days&nbsp;&nbsp;</mat-radio-button>
+        <mat-radio-button value="30">30 Days&nbsp;&nbsp;</mat-radio-button>
+        <mat-radio-button value="90">90 Days&nbsp;&nbsp;</mat-radio-button>
+        <mat-radio-button value="365">1 Year&nbsp;&nbsp;</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </mat-card-content></mat-card
+>
