@@ -20,6 +20,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
 import { SettingsComponent } from './settings/settings.component';
 import { RigComponent } from './rig/rig.component';
 import { PanelComponent } from './panel/panel.component';
+import { FdigitComponent } from './fdigit/fdigit.component';
+import { FcontrolComponent } from './fcontrol/fcontrol.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { PanelComponent } from './panel/panel.component';
     SettingsComponent,
     RigComponent,
     PanelComponent,
+    FdigitComponent,
+    FcontrolComponent,
   ],
   imports: [
     BrowserModule,
