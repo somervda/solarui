@@ -28,9 +28,9 @@
       </button>
     </div>
 
-    <div class="gridwrapper" *ngIf="(cache$ | async)?.rigOn == true">
-      <div class="prompt">Frequency</div>
-      <div>{{ rigFrequency }}</div>
+    <div class="gridwrapper" *ngIf="(cache$ | async)?.rigOn == false">
+      <div><app-fcontrol value="007025000"></app-fcontrol></div>
+      <div></div>
       <div class="prompt">Mode</div>
       <div>{{ rigMode }}</div>
       <div class="prompt">Band</div>
@@ -45,5 +45,3 @@
     </div>
   </mat-card-content>
 </mat-card>
-
-<app-fcontrol value="73"></app-fcontrol>
