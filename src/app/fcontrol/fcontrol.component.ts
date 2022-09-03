@@ -6,7 +6,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./fcontrol.component.scss'],
 })
 export class FcontrolComponent implements OnInit {
-  @Input() value: string = '';
+  @Input() value: number = 0;
+
   value100000000 = '';
   value10000000 = '';
   value1000000 = '';
@@ -25,23 +26,22 @@ export class FcontrolComponent implements OnInit {
 
   updateFrequency(updateAmount: number) {
     console.log(updateAmount);
-    let value = parseInt(this.value) + updateAmount;
-    this.value = this.padWithZero(value, 9);
-    console.log(this.value);
+    this.value += updateAmount;
     this.setDigits();
   }
 
   setDigits() {
-    this.value100000000 = this.value.substring(0, 1);
-    this.value10000000 = this.value.substring(1, 2);
-    this.value1000000 = this.value.substring(2, 3);
-    this.value100000 = this.value.substring(3, 4);
-    this.value10000 = this.value.substring(4, 5);
-    this.value1000 = this.value.substring(5, 6);
-    this.value100 = this.value.substring(6, 7);
-    this.value10 = this.value.substring(7, 8);
-    this.value1 = this.value.substring(8, 9);
-    console.log('Value10:', this.value10, ' Value1:', this.value1);
+    let strValue = this.padWithZero(this.value, 9);
+    console.log(strValue);
+    this.value100000000 = strValue.substring(0, 1);
+    this.value10000000 = strValue.substring(1, 2);
+    this.value1000000 = strValue.substring(2, 3);
+    this.value100000 = strValue.substring(3, 4);
+    this.value10000 = strValue.substring(4, 5);
+    this.value1000 = strValue.substring(5, 6);
+    this.value100 = strValue.substring(6, 7);
+    this.value10 = strValue.substring(7, 8);
+    this.value1 = strValue.substring(8, 9);
   }
 
   padWithZero(num: number, targetLength: number) {

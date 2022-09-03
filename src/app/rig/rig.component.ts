@@ -23,8 +23,8 @@ export class RigComponent implements OnInit, OnDestroy {
   rigFrequency: number = 0;
   rigMode: string = '';
   rigBand: string = '';
-  showSpinner=false;
-  spinnerMsg = ""
+  showSpinner = false;
+  spinnerMsg = '';
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -42,18 +42,18 @@ export class RigComponent implements OnInit, OnDestroy {
 
   onRig() {
     // console.log('rig on');
-    this.showSpinner=true;
-    this.spinnerMsg="Turning on rig..."
+    this.showSpinner = true;
+    this.spinnerMsg = 'Turning on rig...';
     this.rig$ = this.rigService.rigOn();
     this.rig$$ = this.rig$.subscribe(
       (response) => {
-        this.showSpinner=false;
-        this.spinnerMsg=""
+        this.showSpinner = false;
+        this.spinnerMsg = '';
         this.cache$ = this.cacheService.getCache();
         this.updateStatus();
       },
       (error) => {
-        this.showSpinner=false;
+        this.showSpinner = false;
         this.snackBar.open(error.error, 'Close', {
           duration: 5000,
           horizontalPosition: this.horizontalPosition,
@@ -65,12 +65,12 @@ export class RigComponent implements OnInit, OnDestroy {
 
   offRig() {
     // console.log('rig off');
-    this.showSpinner=true;
-    this.spinnerMsg="Turning off rig..."
+    this.showSpinner = true;
+    this.spinnerMsg = 'Turning off rig...';
     this.rig$ = this.rigService.rigOff();
     this.rig$$ = this.rig$.subscribe((response) => {
-      this.showSpinner=false;
-      this.spinnerMsg=""
+      this.showSpinner = false;
+      this.spinnerMsg = '';
       this.cache$ = this.cacheService.getCache();
     });
   }
@@ -79,6 +79,7 @@ export class RigComponent implements OnInit, OnDestroy {
     // get the current settings on the rig
     this.rigctlService.rigctl('get_freq').subscribe((response) => {
       this.rigFrequency = parseInt(response);
+      console.log("rigFrequency:'" + this.rigFrequency + "'");
       this.rigBand = this.freqToBand(this.rigFrequency);
     });
     this.rigctlService.rigctl('get_mode').subscribe((response) => {

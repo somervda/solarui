@@ -28,9 +28,9 @@
       </button>
     </div>
 
-    <div class="gridwrapper" *ngIf="(cache$ | async)?.rigOn == false">
-      <div><app-fcontrol value="007025000"></app-fcontrol></div>
-      <div></div>
+    <div class="gridwrapper" *ngIf="(cache$ | async)?.rigOn == true">
+      <div class="prompt">Frequency</div>
+      <div><app-fcontrol [value]="rigFrequency"></app-fcontrol></div>
       <div class="prompt">Mode</div>
       <div>{{ rigMode }}</div>
       <div class="prompt">Band</div>
