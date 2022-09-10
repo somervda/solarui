@@ -1,5 +1,11 @@
 <mat-card
-  style="border: grey; margin: 5px; max-width: 900px; min-height: 200px"
+  style="
+    border: grey;
+    margin: 5px;
+    max-width: 900px;
+    min-height: 200px;
+    min-width: 320px;
+  "
 >
   <mat-card-content>
     <div *ngIf="(cache$ | async)?.rigOn == false" style="margin: 3px">
@@ -29,19 +35,83 @@
     </div>
 
     <div class="gridwrapper" *ngIf="(cache$ | async)?.rigOn == true">
-      <div class="prompt">Frequency</div>
-      <div><app-fcontrol [value]="rigFrequency"></app-fcontrol></div>
-      <div class="prompt">Mode</div>
-      <div>{{ rigMode }}</div>
-      <div class="prompt">Band</div>
-      <div>{{ rigBand }}</div>
-      <div class="prompt">Power</div>
-      <div></div>
+      <div>
+        <div
+          style="
+            font-size: 11px;
+            padding: 0px;
+            margin: 0px;
+            font-weight: 400;
+            color: gray;
+            font-family: Roboto, 'Helvetica Neue', sans-serif;
+            vertical-align: top;
+          "
+        >
+          Frequency
+        </div>
+        <app-fcontrol
+          [value]="rigFrequency"
+          [minimum]="rigBandMinimum"
+          [maximum]="rigBandMaximum"
+          (onChange)="onFrequencyChange($event)"
+        ></app-fcontrol>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Band</mat-label>
+          <mat-select
+            [(ngModel)]="rigBand"
+            appearance="fill"
+            (selectionChange)="onBandChange()"
+            style="width: 200px"
+          >
+            <mat-option *ngFor="let bii of bandInfo" [value]="bii.band">{{
+              bii.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div [innerHTML]="rigBandDescription"></div>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Mode</mat-label>
+          <mat-select
+            [(ngModel)]="rigMode"
+            appearance="fill"
+            (selectionChange)="onModeChange()"
+            style="width: 200px"
+          >
+            <mat-option value="CW">CW (Carrier Wave)</mat-option>
+            <mat-option value="AM">AM (Amplitude Modulation)</mat-option>
+            <mat-option value="USB">USB (Upper Sideband)</mat-option>
+            <mat-option value="LSB">LSB (Lower Sideband)</mat-option>
+            <mat-option value="FM">FM Frequency Modulation)</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <div
+          style="
+            font-size: 11px;
+            padding: 0px;
+            margin: 0px;
+            font-weight: 400;
+            color: gray;
+            font-family: Roboto, 'Helvetica Neue', sans-serif;
+            vertical-align: top;
+          "
+        >
+          PTT
+        </div>
+        <button mat-stroked-button matTooltip="PTT" (click)="onPTT()">
+          {{ rigPTT ? "On" : "Off" }}
+        </button>
+      </div>
     </div>
     <div class="center" *ngIf="showSpinner">
       <!-- needed to fudge the left alignment of the spinner to center over text -->
       <mat-spinner diameter="40" style="margin-left: 30px"></mat-spinner>
-      <p>{{ [spinnerMsg] }}</p>
+      <!-- <p>{{ [spinnerMsg] }}</p> -->
     </div>
   </mat-card-content>
 </mat-card>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, timer } from 'rxjs';
 import { Cache, CacheService } from '../services/cache.service';
 import { RigService } from '../services/rig.service';
 import {
@@ -8,6 +8,9 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { RigctlService } from '../services/rigctl.service';
+import { BandInfo, BandInfoItem } from '../models/band.model';
+import { HelperService } from '../services/helper.service';
+import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
 
 @Component({
   selector: 'app-rig',
@@ -16,15 +19,23 @@ import { RigctlService } from '../services/rigctl.service';
 })
 export class RigComponent implements OnInit, OnDestroy {
   cache$: Observable<Cache> | undefined;
+  cache$$: Subscription | undefined;
   rig$: Observable<string | never[]> | undefined;
   rig$$: Subscription | undefined;
 
   // Rig settings
   rigFrequency: number = 0;
-  rigMode: string = '';
-  rigBand: string = '';
+  rigMode = 'CW';
+  rigPassband = '';
+  rigBandDescription: string = '';
+  rigBand: number = -1;
+  rigBandMinimum = -1;
+  rigBandMaximum = -1;
+  rigPTT = false;
   showSpinner = false;
-  spinnerMsg = '';
+  // spinnerMsg = '';
+  bandInfo = BandInfo;
+  bandInfoItem: BandInfoItem | undefined = undefined;
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -33,31 +44,75 @@ export class RigComponent implements OnInit, OnDestroy {
     private cacheService: CacheService,
     private rigService: RigService,
     private snackBar: MatSnackBar,
-    private rigctlService: RigctlService
-  ) {}
+    private rigctlService: RigctlService,
+    private helper: HelperService
+  ) {
+    // console.log('constructor');
+  }
 
   ngOnInit(): void {
+    // console.log('ngOnInit');
     this.cache$ = this.cacheService.getCache();
+    this.cache$$ = this.cache$.subscribe((cache) => {
+      console.log('ngOnInit cache$$');
+      if (cache.rigOn == true) {
+        this.getRigSettings();
+      }
+    });
+  }
+
+  onFrequencyChange(frequency: number) {
+    this.rigctlService
+      .rigctl('set_freq ' + frequency.toString())
+      .subscribe((response) => {
+        console.log('updateFrequency:', frequency);
+        this.getRigSettings();
+      });
+  }
+
+  onModeChange() {
+    console.log('onModeChange', this.rigMode);
+    this.rigctlService
+      .rigctl('set_mode ' + this.rigMode + ' 0')
+      .subscribe((response) => {
+        this.getRigSettings();
+      });
+  }
+
+  onBandChange() {
+    console.log('onBandChange', this.rigBand);
+    let bandInfoItem = this.helper.getBandInfoItemByBand(this.rigBand);
+    if (bandInfoItem) this.onFrequencyChange(bandInfoItem.start);
+  }
+
+  onPTT() {
+    // Flip PTT setting
+    console.log('set_ptt ' + (this.rigPTT ? '0' : '1'));
+    this.rigctlService
+      .rigctl('set_ptt ' + (this.rigPTT ? '0' : '1'))
+      .subscribe((response) => {
+        // this.rigFrequency = parseInt(response);
+        console.log("set_ptt:'" + response + "'");
+        this.rigPTT = !this.rigPTT;
+      });
   }
 
   onRig() {
     // console.log('rig on');
     this.showSpinner = true;
-    this.spinnerMsg = 'Turning on rig...';
+    // this.spinnerMsg = 'Turning on rig...';
     this.rig$ = this.rigService.rigOn();
     this.rig$$ = this.rig$.subscribe(
       (response) => {
         this.showSpinner = false;
-        this.spinnerMsg = '';
+        // this.spinnerMsg = '';
         this.cache$ = this.cacheService.getCache();
-        this.updateStatus();
+        this.getRigSettings();
       },
       (error) => {
         this.showSpinner = false;
         this.snackBar.open(error.error, 'Close', {
           duration: 5000,
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
         });
       }
     );
@@ -66,43 +121,65 @@ export class RigComponent implements OnInit, OnDestroy {
   offRig() {
     // console.log('rig off');
     this.showSpinner = true;
-    this.spinnerMsg = 'Turning off rig...';
+    // this.spinnerMsg = 'Turning off rig...';
     this.rig$ = this.rigService.rigOff();
     this.rig$$ = this.rig$.subscribe((response) => {
       this.showSpinner = false;
-      this.spinnerMsg = '';
+      // this.spinnerMsg = '';
       this.cache$ = this.cacheService.getCache();
     });
   }
 
-  updateStatus() {
+  getRigSettings() {
     // get the current settings on the rig
     this.rigctlService.rigctl('get_freq').subscribe((response) => {
       this.rigFrequency = parseInt(response);
       console.log("rigFrequency:'" + this.rigFrequency + "'");
-      this.rigBand = this.freqToBand(this.rigFrequency);
+      this.freqToBand(this.rigFrequency);
     });
     this.rigctlService.rigctl('get_mode').subscribe((response) => {
-      this.rigMode = response;
+      let modeDetails = response.split('\n');
+      if ((modeDetails.length = 2)) {
+        this.rigMode = modeDetails[0];
+        this.rigPassband = modeDetails[1];
+        console.log(modeDetails);
+      }
+      this.rigctlService.rigctl('get_ptt').subscribe((response) => {
+        // this.rigFrequency = parseInt(response);
+        console.log("get_ptt:'" + response + "'");
+        if (response.replace('\n', '') == '0') {
+          this.rigPTT = false;
+        } else {
+          this.rigPTT = true;
+        }
+      });
     });
   }
 
   freqToBand(frequency: number) {
-    if (frequency >= 28000000 && frequency <= 29700000) return '10 Meter';
-    if (frequency >= 21000000 && frequency <= 21450000) return '15 Meter';
-    if (frequency >= 18068000 && frequency <= 18168000) return '17 Meter';
-    if (frequency >= 14000000 && frequency <= 14350000) return '20 Meter';
-    if (frequency >= 10100000 && frequency <= 10150000) return '30 Meter';
-    if (frequency >= 7000000 && frequency <= 7300000) return '40 Meter';
-    if (frequency >= 5300000 && frequency <= 5405000) return '60 Meter';
-    if (frequency >= 3500000 && frequency <= 4000000) return '80 Meter';
-    return 'Unknown';
+    let bandInfoItem = this.helper.getBandInfoItemByFrequency(frequency);
+    console.log('bandInfoItem:', bandInfoItem);
+    if (bandInfoItem) {
+      this.rigBand = bandInfoItem.band;
+      this.rigBandDescription = bandInfoItem.description;
+      this.rigBandMinimum = bandInfoItem.start;
+      this.rigBandMaximum = bandInfoItem.end;
+    } else {
+      // Shouldn't get this unless manually set freq on uSDX
+      this.rigBand = -1;
+      this.rigBandDescription = '';
+      this.rigBandMinimum = -1;
+      this.rigBandMaximum = -1;
+    }
   }
 
   ngOnDestroy(): void {
     // Clean up hanging subscriptions to observables
     if (this.rig$$) {
       this.rig$$.unsubscribe();
+    }
+    if (this.cache$$) {
+      this.cache$$.unsubscribe();
     }
   }
 }

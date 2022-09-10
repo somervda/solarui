@@ -1,12 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-fcontrol',
   templateUrl: './fcontrol.component.html',
   styleUrls: ['./fcontrol.component.scss'],
 })
-export class FcontrolComponent implements OnInit {
+export class FcontrolComponent implements OnInit, OnChanges {
   @Input() value: number = 0;
+  @Input() minimum: number = 0;
+  @Input() maximum: number = 0;
+  @Output() onChange = new EventEmitter();
 
   value100000000 = '';
   value10000000 = '';
@@ -24,15 +34,27 @@ export class FcontrolComponent implements OnInit {
     this.setDigits();
   }
 
-  updateFrequency(updateAmount: number) {
-    console.log(updateAmount);
-    this.value += updateAmount;
+  ngOnChanges(changes: any) {
+    console.log('fcontrol Changes', changes);
+    if (changes.value) this.value = changes.value.currentValue;
+    if (changes.minimum) this.minimum = changes.minimum.currentValue;
+    if (changes.maximum) this.maximum = changes.maximum.currentValue;
     this.setDigits();
+  }
+
+  updateFrequency(updateAmount: number) {
+    // console.log(updateAmount);
+    let newValue = this.value + updateAmount;
+    if (newValue <= this.maximum && newValue >= this.minimum) {
+      this.value += updateAmount;
+      this.setDigits();
+      this.onChange.emit(this.value);
+    }
   }
 
   setDigits() {
     let strValue = this.padWithZero(this.value, 9);
-    console.log(strValue);
+    // console.log(strValue);
     this.value100000000 = strValue.substring(0, 1);
     this.value10000000 = strValue.substring(1, 2);
     this.value1000000 = strValue.substring(2, 3);
