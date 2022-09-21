@@ -1,5 +1,14 @@
 .freq-container {
     display: inline-grid;
-    grid-template-columns: auto auto auto auto auto auto auto auto auto  ;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto ;
     column-gap: 2px;
+  }
+
+  .separator1000s {
+    text-align: center;
+    margin-top: 28px;
+    width: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+    font-size: 25px;
   }

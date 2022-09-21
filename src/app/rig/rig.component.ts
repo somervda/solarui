@@ -40,6 +40,9 @@ export class RigComponent implements OnInit, OnDestroy {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
+  mumbleCmd =
+    '"C:\\Program Files\\Mumble\\client\\mumble.exe" mumble://solarui:@rpi3.home';
+
   constructor(
     private cacheService: CacheService,
     private rigService: RigService,
@@ -171,6 +174,20 @@ export class RigComponent implements OnInit, OnDestroy {
       this.rigBandMinimum = -1;
       this.rigBandMaximum = -1;
     }
+  }
+
+  copyCmd() {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.mumbleCmd;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
   }
 
   ngOnDestroy(): void {

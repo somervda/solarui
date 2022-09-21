@@ -20,7 +20,8 @@ export const BandInfo: BandInfoItem[] = [
       'Phone and Image 3.800Mhz to 4.000Mhz (G)<br />' +
       'Phone and Image 3.700Mhz to 4.000Mhz (A)<br />' +
       'RTTY and Data 3.500Mhz to 3.600Mhz (E)<br />' +
-      'Phone and Image 3.600Mhz to 4.000Mhz (E)',
+      'Phone and Image 3.600Mhz to 4.000Mhz (E)<br />' +
+      'Note: LSB used for SSB, some AM used',
   },
   {
     sequence: 7,
@@ -97,6 +98,7 @@ export const BandInfo: BandInfoItem[] = [
     description:
       'RTTY and Data 28.00Mhz to 28.300Mhz (N,T,E,A,G)<br />' +
       'SSB 28.300Mhz to 28.500Mhz (N,T)<br />' +
-      'Phone and Image 28.300Mhz to 29.700Mhz (E,A,G)<br />',
+      'Phone and Image 28.300Mhz to 29.700Mhz (E,A,G)<br />' +
+      'Beacons: 28.200Mhz to 28.300Mhz<br />',
   },
 ];

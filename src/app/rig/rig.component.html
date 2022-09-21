@@ -108,6 +108,27 @@
         </button>
       </div>
     </div>
+    <br />
+    <div
+      *ngIf="(cache$ | async)?.rigOn == true"
+      style="
+        background-color: dimgrey;
+        color: white;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        text-align: center;
+      "
+    >
+      Start Mumble: {{ mumbleCmd }}
+      <button
+        mat-raised-button
+        matTooltip="Copy Mumble command to clipboard"
+        (click)="copyCmd()"
+        style="line-height: 20px; margin-left: 10px"
+      >
+        Copy
+      </button>
+    </div>
     <div class="center" *ngIf="showSpinner">
       <!-- needed to fudge the left alignment of the spinner to center over text -->
       <mat-spinner diameter="40" style="margin-left: 30px"></mat-spinner>
