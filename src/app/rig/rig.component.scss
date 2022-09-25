@@ -8,6 +8,16 @@
     left: 50%;
 }
 
+.fakeLabel {
+  font-size: 11px;
+  padding: 0px;
+  margin: 0px;
+  font-weight: 400;
+  color: gray;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  vertical-align: top;
+}
+
 // Create a 2 column layout when screen is more than 400px wide
 @media (min-width: 550px) {
     .gridwrapper {

@@ -33,6 +33,7 @@ export class RigComponent implements OnInit, OnDestroy {
   rigBandMaximum = -1;
   rigPTT = false;
   showSpinner = false;
+  mumbleState = 'off';
   // spinnerMsg = '';
   bandInfo = BandInfo;
   bandInfoItem: BandInfoItem | undefined = undefined;
@@ -133,6 +134,24 @@ export class RigComponent implements OnInit, OnDestroy {
     });
   }
 
+  mumbleOn() {
+    console.log('mumble on');
+    this.showSpinner = true;
+    this.rigService.mumbleOn().subscribe((response) => {
+      this.showSpinner = false;
+    });
+    this.getRigSettings();
+  }
+
+  mumbleOff() {
+    console.log('mumble off');
+    this.showSpinner = true;
+    this.rigService.mumbleOff().subscribe((response) => {
+      this.showSpinner = false;
+    });
+    this.getRigSettings();
+  }
+
   getRigSettings() {
     // get the current settings on the rig
     this.rigctlService.rigctl('get_freq').subscribe((response) => {
@@ -156,6 +175,11 @@ export class RigComponent implements OnInit, OnDestroy {
           this.rigPTT = true;
         }
       });
+    });
+    // Also get the mumble client state
+    this.rigService.mumbleState().subscribe((response) => {
+      console.log('mumbleState response:', response);
+      this.mumbleState = response;
     });
   }
 

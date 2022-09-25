@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
+export interface MumbleState {
+  mumbleState: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,5 +20,20 @@ export class RigService {
   rigOff() {
     // console.log('Rig service off', environment.solarURL + '/api/rig/off');
     return this.http.get<string>(environment.solarURL + '/api/rig/off');
+  }
+
+  mumbleOn() {
+    return this.http.get<string>(environment.solarURL + '/api/mumble/on');
+  }
+
+  mumbleOff() {
+    return this.http.get<string>(environment.solarURL + '/api/mumble/off');
+  }
+
+  mumbleState() {
+    // return this.http.get<string>(environment.solarURL + '/api/mumble');
+    return this.http.get(environment.solarURL + '/api/mumble', {
+      responseType: 'text',
+    });
   }
 }

@@ -90,21 +90,28 @@
         </mat-form-field>
       </div>
       <div>
-        <div
-          style="
-            font-size: 11px;
-            padding: 0px;
-            margin: 0px;
-            font-weight: 400;
-            color: gray;
-            font-family: Roboto, 'Helvetica Neue', sans-serif;
-            vertical-align: top;
-          "
-        >
-          PTT
-        </div>
+        <div class="fakeLabel">PTT</div>
         <button mat-stroked-button matTooltip="PTT" (click)="onPTT()">
           {{ rigPTT ? "On" : "Off" }}
+        </button>
+      </div>
+      <div>
+        <div class="fakeLabel">Mumble on Rig</div>
+        <button
+          mat-stroked-button
+          matTooltip="Turn on Mumble"
+          (click)="mumbleOn()"
+          *ngIf="mumbleState == 'off'"
+        >
+          Turn On
+        </button>
+        <button
+          mat-stroked-button
+          matTooltip="Turn off Mumble"
+          (click)="mumbleOff()"
+          *ngIf="mumbleState == 'on'"
+        >
+          Turn Off
         </button>
       </div>
     </div>
