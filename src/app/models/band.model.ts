@@ -21,7 +21,7 @@ export const BandInfo: BandInfoItem[] = [
       'Phone and Image 3.700Mhz to 4.000Mhz (A)<br />' +
       'RTTY and Data 3.500Mhz to 3.600Mhz (E)<br />' +
       'Phone and Image 3.600Mhz to 4.000Mhz (E)<br />' +
-      'Note: LSB used for SSB, some AM used',
+      'Note: LSB usually used for SSB, some AM used',
   },
   {
     sequence: 7,
@@ -43,7 +43,8 @@ export const BandInfo: BandInfoItem[] = [
       'RTTY and Data 7.025Mhz to 7.125Mhz (G,A)<br />' +
       'RTTY and Data 7.000Mhz to 7.125Mhz (E)<br />' +
       'Phone and Image 7.175Mhz to 7.3Mhz (G)<br />' +
-      'Phone and Image 7.125Mhz to 7.3Mhz (A,E)',
+      'Phone and Image 7.125Mhz to 7.3Mhz (A,E)<br/>' +
+      'Note: LSB usually used for SSB, some AM used',
   },
   {
     sequence: 5,
@@ -62,8 +63,10 @@ export const BandInfo: BandInfoItem[] = [
     description:
       'RTTY and Data 14.025Mhz to 14.150Mhz (G,A)<br />' +
       'RTTY and Data 14.000Mhz to 14.150Mhz (E)<br />' +
-      'Phone and Image 14.225Mhz to 7.3Mhz (G)<br />' +
-      'Phone and Image 7.125Mhz to 7.3Mhz (A,E)',
+      'Phone and Image 14.225Mhz to 14.350Mhz (G)<br />' +
+      'Phone and Image 14.175Mhz to 14.350Mhz (A)<br/>' +
+      'Phone and Image 14.150Mhz to 14.350Mhz (E)<br/>' +
+      'Note: USB usually used for SSB, some AM used',
   },
   {
     sequence: 3,
@@ -73,7 +76,8 @@ export const BandInfo: BandInfoItem[] = [
     end: 18168000,
     description:
       'RTTY and Data 18.068Mhz to 18.110Mhz (E,A,G)<br />' +
-      'Phone and Image 18.110Mhz to 18.168Mhz (E,A,G)<br />',
+      'Phone and Image 18.110Mhz to 18.168Mhz (E,A,G)<br />' +
+      'Note: USB usually used for SSB, some AM used',
   },
   {
     sequence: 2,
@@ -87,7 +91,8 @@ export const BandInfo: BandInfoItem[] = [
       'Phone and Image 21.275Mhz to 21.450Mhz (G)<br />' +
       'Phone and Image 21.225Mhz to 21.450Mhz (A)<br />' +
       'RTTY and Data 21.000Mhz to 21.200Mhz (E)<br />' +
-      'Phone and Image 21.200Mhz to 21.450Mhz (E)',
+      'Phone and Image 21.200Mhz to 21.450Mhz (E)<br />' +
+      'Note: USB usually used for SSB, some AM used',
   },
   {
     sequence: 1,
@@ -99,6 +104,7 @@ export const BandInfo: BandInfoItem[] = [
       'RTTY and Data 28.00Mhz to 28.300Mhz (N,T,E,A,G)<br />' +
       'SSB 28.300Mhz to 28.500Mhz (N,T)<br />' +
       'Phone and Image 28.300Mhz to 29.700Mhz (E,A,G)<br />' +
-      'Beacons: 28.200Mhz to 28.300Mhz<br />',
+      'Beacons: 28.200Mhz to 28.300Mhz<br />' +
+      'Note: USB usually used for SSB, some AM used',
   },
 ];
