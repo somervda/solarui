@@ -38,7 +38,7 @@ export class RenogyService {
     // Note: ios was not doing http gets unless the fully qualified URL was used
     console.log('getStatus');
     return this.http.get<RenogyStatus>(
-      environment.solarURL + '/api/renogystatus'
+      'http://' + environment.solarHost + '/api/renogystatus'
     );
   }
 
@@ -47,7 +47,7 @@ export class RenogyService {
     start -= 60 * 60 * 24 * days;
     start = Math.round(start);
     return this.http.get<[[RenogyHistory]]>(
-      environment.solarURL + '/api/renogyhistory/' + start
+      'http://' + environment.solarHost + '/api/renogyhistory/' + start
     );
   }
 
@@ -60,7 +60,7 @@ export class RenogyService {
       start = 1661882422;
     }
     return this.http.get<[[PanelHistory]]>(
-      environment.solarURL + '/api/panelhistory/' + start
+      'http://' + environment.solarHost + '/api/panelhistory/' + start
     );
   }
 }

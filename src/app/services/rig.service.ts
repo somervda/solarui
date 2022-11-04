@@ -14,25 +14,33 @@ export class RigService {
 
   rigOn() {
     // console.log('Rig service on', environment.solarURL + '/api/rig/on');
-    return this.http.get<string>(environment.solarURL + '/api/rig/on');
+    return this.http.get<string>(
+      'http://' + environment.solarHost + '/api/rig/on'
+    );
   }
 
   rigOff() {
     // console.log('Rig service off', environment.solarURL + '/api/rig/off');
-    return this.http.get<string>(environment.solarURL + '/api/rig/off');
+    return this.http.get<string>(
+      'http://' + environment.solarHost + '/api/rig/off'
+    );
   }
 
   mumbleOn() {
-    return this.http.get<string>(environment.solarURL + '/api/mumble/on');
+    return this.http.get<string>(
+      'http://' + environment.solarHost + '/api/mumble/on'
+    );
   }
 
   mumbleOff() {
-    return this.http.get<string>(environment.solarURL + '/api/mumble/off');
+    return this.http.get<string>(
+      'http://' + environment.solarHost + '/api/mumble/off'
+    );
   }
 
   mumbleState() {
     // return this.http.get<string>(environment.solarURL + '/api/mumble');
-    return this.http.get(environment.solarURL + '/api/mumble', {
+    return this.http.get('http://' + environment.solarHost + '/api/mumble', {
       responseType: 'text',
     });
   }

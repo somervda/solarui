@@ -9,8 +9,11 @@ export class RigctlService {
   constructor(private http: HttpClient) {}
 
   rigctl(operation: string) {
-    return this.http.get(environment.solarURL + '/api/rigctl/' + operation, {
-      responseType: 'text',
-    });
+    return this.http.get(
+      'http://' + environment.solarHost + '/api/rigctl/' + operation,
+      {
+        responseType: 'text',
+      }
+    );
   }
 }

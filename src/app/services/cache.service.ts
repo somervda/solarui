@@ -22,7 +22,9 @@ export class CacheService {
 
   getCache() {
     // Note: ios was not doing http gets unless the fully qualified URL was used
-    return this.http.get<Cache>(environment.solarURL + '/api/cache');
+    return this.http.get<Cache>(
+      'http://' + environment.solarHost + '/api/cache'
+    );
   }
 
   // Settings update routines
@@ -30,14 +32,18 @@ export class CacheService {
   powerSaveLevel(value: number) {
     // console.log('cacheService:powerSaveLevel', value);
     return this.http.get<Cache>(
-      environment.solarURL + '/api/cache/powerSaveLevel/' + value.toString()
+      'http://' +
+        environment.solarHost +
+        '/api/cache/powerSaveLevel/' +
+        value.toString()
     );
   }
 
   webcamExpiryMinutes(value: number) {
     // console.log('cacheService:webcamExpiryMinutes', value);
     return this.http.get<Cache>(
-      environment.solarURL +
+      'http://' +
+        environment.solarHost +
         '/api/cache/webcamExpiryMinutes/' +
         value.toString()
     );
@@ -46,14 +52,18 @@ export class CacheService {
   rigExpiryMinutes(value: number) {
     // console.log('cacheService:rigExpiryMinutes', value);
     return this.http.get<Cache>(
-      environment.solarURL + '/api/cache/rigExpiryMinutes/' + value.toString()
+      'http://' +
+        environment.solarHost +
+        '/api/cache/rigExpiryMinutes/' +
+        value.toString()
     );
   }
 
   webcamRunAtNight(value: boolean) {
     // console.log('cacheService:webcamRunAtNight', value);
     return this.http.get<Cache>(
-      environment.solarURL +
+      'http://' +
+        environment.solarHost +
         '/api/cache/webcamRunAtNight/' +
         (value == false ? 'False' : 'True')
     );
@@ -62,7 +72,10 @@ export class CacheService {
   webcamTurnOffTime(value: string) {
     // console.log('cacheService:webcamTurnOffTime', value);
     return this.http.get<Cache>(
-      environment.solarURL + '/api/cache/webcamTurnOffTime/' + value
+      'http://' +
+        environment.solarHost +
+        '/api/cache/webcamTurnOffTime/' +
+        value
     );
   }
 }

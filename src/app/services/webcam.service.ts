@@ -9,10 +9,14 @@ export class WebcamService {
   constructor(private http: HttpClient) {}
 
   webcamOn() {
-    return this.http.get<string>(environment.solarURL + '/api/webcam/on');
+    return this.http.get<string>(
+      'http://' + environment.solarHost + '/api/webcam/on'
+    );
   }
   webcamOff() {
     // Not used?
-    return this.http.get<string>(environment.solarURL + '/api/webcam/off');
+    return this.http.get<string>(
+      'http://' + environment.solarHost + '/api/webcam/off'
+    );
   }
 }
