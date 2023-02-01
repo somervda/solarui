@@ -107,11 +107,15 @@ export class PanelComponent implements OnInit, OnDestroy {
           // Change of day - write out dayHistory
           if (!day1) {
             let dayItem = [];
+            let solarHours = (boostPct + floatPct) / 100;
+            if (solarHours == 0) {
+              solarHours = 24;
+            }
             dayItem.push(
               lastEpochDate,
-              solarVolts / hourCounter,
-              boostPct / hourCounter,
-              floatPct / hourCounter
+              solarVolts / solarHours,
+              boostPct / 24,
+              floatPct / 24
             );
             console.log(dayHistory);
             dayHistory.push(JSON.parse(JSON.stringify(dayItem)));

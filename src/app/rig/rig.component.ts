@@ -11,6 +11,7 @@ import { RigctlService } from '../services/rigctl.service';
 import { BandInfo, BandInfoItem } from '../models/band.model';
 import { HelperService } from '../services/helper.service';
 import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-rig',
@@ -42,7 +43,8 @@ export class RigComponent implements OnInit, OnDestroy {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   mumbleCmd =
-    '"C:\\Program Files\\Mumble\\client\\mumble.exe" mumble://solarui:@rpi3.home';
+    '"C:\\Program Files\\Mumble\\client\\mumble.exe" mumble://solarui:@' +
+    environment.solarHost;
 
   constructor(
     private cacheService: CacheService,
